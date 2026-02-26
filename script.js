@@ -735,21 +735,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     statNumbers.forEach(num => counterObserver.observe(num));
 
-    // ── METRIC VALUE COUNTER ──
-    const metricValues = document.querySelectorAll('.metric-value[data-val]');
-
-    const metricObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = entry.target;
-                const val = parseInt(target.getAttribute('data-val'));
-                animateCounter(target, val);
-                metricObserver.unobserve(target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    metricValues.forEach(val => metricObserver.observe(val));
+    // Removed automatic metric value observer, now handled by scan button
 
     function animateCounter(element, target) {
         let current = 0;
@@ -956,13 +942,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 counters.forEach(counter => {
                     const dataVal = counter.getAttribute('data-val');
+                    const unit = counter.getAttribute('data-unit') || '';
                     const target = dataVal === '∞' ? 100 : parseInt(dataVal);
                     const currentVal = (overallProgress / 100) * target;
 
                     if (dataVal === '∞') {
-                        counter.innerText = '∞%';
+                        if (overallProgress >= 100) {
+                            counter.innerText = '∞' + unit;
+                        } else {
+                            counter.innerText = Math.ceil(currentVal) + unit;
+                        }
                     } else {
-                        counter.innerText = Math.ceil(currentVal) + '%';
+                        counter.innerText = Math.ceil(currentVal) + unit;
                     }
                 });
 
