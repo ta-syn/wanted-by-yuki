@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="A digital tribute to Lyraa — The Most Wanted Woman Alive. An interactive experience of love, crimes, and evidence.">
+    <meta name="theme-color" content="#080305">
+    <meta name="author" content="Yuki">
+    <title>LYRAA — The Most Wanted Woman Alive (By Yuki)</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lyraa-tribute.com/">
+    <meta property="og:title" content="LYRAA — The Most Wanted Woman Alive">
+    <meta property="og:description"
+        content="Considered extremely dangerous to the heart. Official dossier and tribute to Lyraa.">
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1516589174184-c685266144fe?auto=format&fit=crop&q=80&w=1200&h=630">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="LYRAA — The Most Wanted Woman Alive">
+    <meta property="twitter:description"
+        content="Official dossier and tribute. Approach with caution: side effects include falling in love.">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Special+Elite&family=Outfit:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-eyebrow">✦ CLASSIFIED DOCUMENT LOADING ✦</div>
+            <div class="loader-titles">
+                <h1 class="loader-title-main">LYRAA</h1>
+                <h1 class="loader-title-sub">WANTED</h1>
+            </div>
+            <div class="loader-heart-box">
+                <div class="loader-heart-glow">❤️</div>
+            </div>
+            <div class="loader-bar-container">
+                <div class="loader-progress-line" id="loaderProgressBar"></div>
+            </div>
+            <div class="loader-percentage" id="loaderPercentage">0%</div>
+            <div class="loader-footer-text">Welcome, Lyraa — from Yuki 💋</div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-heart-trail" id="cursorHeartTrail"></div>
+
+    <!-- Advanced Music Player -->
+    <div class="advanced-music-player" id="advancedPlayer">
+        <div class="player-controls-fixed">
+            <button class="music-toggle-main" id="musicToggleGlobal" aria-label="Open Music Player">
+                <span class="music-note-icon">🎵</span>
+            </button>
+            <button class="sound-toggle-main" id="uiSoundToggle" aria-label="Toggle UI Sounds">
+                <span class="sound-icon">🔊</span>
+            </button>
+        </div>
+
+        <div class="music-panel" id="musicPanel">
+            <div class="panel-header">
+                <span class="panel-title">❤ Yuki × Lyraa</span>
+                <button class="panel-close" id="panelClose">&times;</button>
+            </div>
+
+            <div class="track-list">
+                <!-- Track 1 -->
+                <div class="track-item active"
+                    data-src="./song/Elvis_Presly_-_I_Can_t_Help_Falling_In_Love_With_You_(mp3.pm).mp3">
+                    <div class="track-thumb">🌹</div>
+                    <div class="track-info">
+                        <span class="track-name">Lyraa's Lullaby</span>
+                        <span class="track-desc">Soft • Romantic • Dreamy</span>
+                    </div>
+                    <button class="track-play-btn">▶</button>
+                </div>
+
+                <!-- Track 2 -->
+                <div class="track-item" data-src="./song/I_Think_They_Call_This_Love_Cover.mp3">
+                    <div class="track-thumb">💫</div>
+                    <div class="track-info">
+                        <span class="track-name">Yuki's Serenade</span>
+                        <span class="track-desc">Warm • Tender • Slow</span>
+                    </div>
+                    <button class="track-play-btn">▶</button>
+                </div>
+            </div>
+
+            <div class="player-controls-area">
+                <button class="control-btn" id="seekPrev" title="Back 10s">↺</button>
+                <div class="player-progress-bar" id="playerProgressBar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <button class="control-btn" id="seekNext" title="Forward 10s">↻</button>
+            </div>
+
+            <div class="player-volume-area">
+                <span class="volume-status">🔉</span>
+                <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.75" class="volume-slider">
+            </div>
+        </div>
+
+        <audio id="bgMusic">
+            <source src="./song/Elvis_Presly_-_I_Can_t_Help_Falling_In_Love_With_You_(mp3.pm).mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Navigation -->
+    <header id="nav">
+        <a href="#" class="nav-logo"><span>L</span>yraa</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#wanted" class="nav-link">The Case</a></li>
+            <li><a href="#crimes" class="nav-link">Crimes</a></li>
+            <li><a href="#analysis" class="nav-link">Analysis</a></li>
+            <li><a href="#evidence" class="nav-link">Evidence</a></li>
+            <li><a href="#gallery" class="nav-link">Gallery</a></li>
+            <li><a href="#mood" class="nav-link">Mood</a></li>
+            <li><a href="#timeline" class="nav-link">Timeline</a></li>
+            <li><a href="#verdict" class="nav-link">Verdict</a></li>
+            <li><a href="#letter" class="nav-link">Letter</a></li>
+        </ul>
+        <div class="nav-indicator" id="navIndicator"></div>
+        <div class="scroll-progress-container">
+            <div class="scroll-progress-bar" id="scrollBar"></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <canvas id="particles-canvas"></canvas>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-eyebrow-boxed reveal">
+                    <span class="box-icon">✦</span>
+                    <span class="box-text">⚡ OFFICIAL DOSSIER — EYES ONLY ⚡</span>
+                    <span class="box-icon">✦</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-line">LYRAA</span>
+                    <span class="title-line red-stroke">WANTED</span>
+                </h1>
+                <p class="hero-subtitle">"The Most Dangerous Woman Alive"</p>
+                <p class="hero-description">
+                    The subject is considered a high-level threat to all existing romantic standards.
+                    Warning: Exposure results in immediate heart-theft, 24/7 day-dreaming, and a total surrender to her
+                    naughty energy.
+                </p>
+                <div class="hero-cta">
+                    <a href="#wanted" class="btn-primary">
+                        <span>View Her File</span>
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                    <a href="#letter" class="btn-secondary">
+                        <span>Read The Letter</span>
+                        <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span class="scroll-text">Scroll to Explore</span>
+                <div class="scroll-line">
+                    <div class="scroll-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wanted Section -->
+        <section id="wanted" class="wanted-section-wrapper">
+            <div class="wanted-section">
+                <div class="wanted-left reveal">
+                    <span class="section-label">§ Case File No. 143</span>
+                    <h2 class="section-title">The <em>Most</em><br>Naughty<br>Criminal</h2>
+                    <p>Her felonies are as breathtaking as her face. She has been running circles around my heart since
+                        the day we met. She is mischievous, irresistible, and frankly, a health hazard to my sanity.</p>
+                    <p>The only legal sentence? To be held tightly, kissed until she's out of breath, and loved far
+                        beyond what is considered reasonable for a normal human.</p>
+                    <div class="wanted-stats">
+                        <div class="stat-box">
+                            <span class="stat-number" data-count="∞">∞</span>
+                            <span class="stat-label">Hearts Stolen</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number" data-count="143">0</span>
+                            <span class="stat-label">Reasons To Love</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number" data-count="24">0</span>
+                            <span class="stat-label">Dangerous Level</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number" data-count="100">0</span>
+                            <span class="stat-label">Guilty %</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal" style="transition-delay:.2s">
+                    <div class="poster-card">
+                        <div class="bullet" style="width:16px;height:16px;top:18px;left:14px"></div>
+                        <div class="bullet" style="width:11px;height:11px;top:24px;right:18px"></div>
+                        <div class="bullet" style="width:13px;height:13px;bottom:20px;left:20px"></div>
+                        <div class="poster-card-wanted">WANTED</div>
+                        <div class="poster-card-doa">— Dead or Alive (but preferably in my arms) —</div>
+                        <div class="poster-photo-box">
+                            <img src="./lyraa photos/wanted.jpeg" alt="Wanted: Lyraa" class="poster-img">
+                            <div class="photo-scan-line"></div>
+                            <div class="surveillance-crosshair"></div>
+                            <div class="photo-shine"></div>
+                        </div>
+                        <div class="poster-name">LYRAA</div>
+                        <div class="poster-alias">a.k.a. "The Heart Thief" • "Princess" • "My Everything"</div>
+                        <div class="poster-divider"></div>
+                        <ul class="poster-crimes">
+                            <li>Grand theft of one (1) entire Yuki-heart</li>
+                            <li>Possession of illegal levels of celestial radiance</li>
+                            <li>Driving the lead investigator to complete madness</li>
+                            <li>Being far too cute in simple oversized t-shirts</li>
+                            <li>Smuggling naughty thoughts into a innocent boy's mind</li>
+                        </ul>
+                        <div class="poster-reward-box">
+                            <div class="poster-reward-label">Reward</div>
+                            <div class="poster-reward-amount">∞ Kisses</div>
+                        </div>
+                        <div class="poster-stamp">Guilty<br>of my ❤️</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Crimes Section -->
+        <section id="crimes" class="crimes-section">
+            <div class="crimes-inner">
+                <div class="crimes-header reveal">
+                    <span class="section-label">§ The Charges</span>
+                    <h2 class="section-title">Her Many <em class="highlight-red">Crimes</em></h2>
+                    <p class="crimes-subtitle">A comprehensive legal record of her offenses against my heart</p>
+                </div>
+                <div class="crimes-grid">
+                    <div class="crime-card reveal">
+                        <span class="crime-number">01</span>
+                        <span class="crime-icon">😏</span>
+                        <div class="crime-title">Reckless Smiling</div>
+                        <p class="crime-desc">Repeatedly deploying her smile in public spaces without warning, causing
+                            innocent bystanders (mainly one specific boyfriend) to completely lose their train of
+                            thought and forget what they were doing.</p>
+                        <span class="crime-verdict">✦ Guilty as Charged</span>
+                    </div>
+                    <div class="crime-card reveal" style="transition-delay:.1s">
+                        <span class="crime-number">02</span>
+                        <span class="crime-icon">💋</span>
+                        <p class="crime-desc">Executing high-precision heart theft. No weapons used, just a simple "Hi"
+                            and a naughty smile. Subject refuses to return the heart and keeps it as a permanent trophy.
+                            The victim is fully cooperating.</p>
+                        <span class="crime-verdict">✦ SENTENCED TO FOREVER</span>
+                    </div>
+                    <div class="crime-card reveal" style="transition-delay:.2s">
+                        <span class="crime-number">03</span>
+                        <span class="crime-icon">🌙</span>
+                        <div class="crime-title">Sleep Deprivation</div>
+                        <p class="crime-desc">Causes nights of sleeplessness not through malice but through being so
+                            perfectly on his mind that thinking about anything else becomes physically impossible. A
+                            truly naughty crime.</p>
+                        <span class="crime-verdict">✦ Repeat Offender</span>
+                    </div>
+                    <div class="crime-card reveal" style="transition-delay:.1s">
+                        <span class="crime-number">04</span>
+                        <span class="crime-icon">🔥</span>
+                        <div class="crime-title">Being Too Hot to Handle</div>
+                        <p class="crime-desc">Operating at dangerously attractive levels at all times. Scientific
+                            studies confirm no known human should be allowed to look this good without a license.
+                            License denied. Still hot. Still illegal.</p>
+                        <span class="crime-verdict">✦ No Defense Possible</span>
+                    </div>
+                    <div class="crime-card reveal" style="transition-delay:.2s">
+                        <span class="crime-number">05</span>
+                        <span class="crime-icon">😤</span>
+                        <div class="crime-title">Cute When Angry</div>
+                        <p class="crime-desc">Uses the forbidden technique of being unreasonably adorable during
+                            arguments, making it completely impossible to stay mad. This is considered a form of
+                            emotional manipulation. Deeply unfair. Deeply appreciated.</p>
+                        <span class="crime-verdict">✦ Cannot Be Prosecuted</span>
+                    </div>
+                    <div class="crime-card reveal" style="transition-delay:.3s">
+                        <span class="crime-number">06</span>
+                        <span class="crime-icon">🎭</span>
+                        <div class="crime-title">General Naughtiness</div>
+                        <p class="crime-desc">A consistent pattern of being mischievous, cheeky, and playfully naughty
+                            in ways that are completely illegal under the laws of romance but entirely welcome under the
+                            jurisdiction of being his girl.</p>
+                        <span class="crime-verdict">✦ Gloriously Guilty</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Love Measurement Section -->
+        <section id="analysis" class="analysis-section">
+            <div class="analysis-inner">
+                <div class="analysis-header reveal">
+                    <span class="section-label">§ FORENSIC INVESTIGATION</span>
+                    <h2 class="section-title">Love <em class="highlight-red">Measurement</em> Report</h2>
+                    <p class="analysis-subtitle">Scientifically accurate data — probably</p>
+                </div>
+
+                <div class="analysis-grid reveal">
+                    <!-- Metric 1 -->
+                    <div class="metric-item">
+                        <div class="metric-info">
+                            <span class="metric-label">HOW NAUGHTY SHE IS</span>
+                            <span class="metric-value counter" data-val="97">0</span>
+                        </div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar" data-target="97"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metric 2 -->
+                    <div class="metric-item">
+                        <div class="metric-info">
+                            <span class="metric-label">HOW CUTE SHE IS</span>
+                            <span class="metric-value counter" data-val="100">0</span>
+                        </div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar" data-target="100"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metric 3 -->
+                    <div class="metric-item">
+                        <div class="metric-info">
+                            <span class="metric-label">HOW MUCH I LOVE HER</span>
+                            <span class="metric-value">∞%</span>
+                        </div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar pulse-gold" data-target="100"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metric 4 -->
+                    <div class="metric-item">
+                        <div class="metric-info">
+                            <span class="metric-label">DANGER TO MY HEART</span>
+                            <span class="metric-value counter" data-val="99">0</span>
+                        </div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar" data-target="99"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metric 5 -->
+                    <div class="metric-item">
+                        <div class="metric-info">
+                            <span class="metric-label">HER SMILE'S POWER</span>
+                            <span class="metric-value counter" data-val="100">0</span>
+                        </div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar" data-target="100"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metric 6 -->
+                    <div class="metric-item">
+                        <div class="metric-info">
+                            <span class="metric-label">EYE CONTACT FATALITY</span>
+                            <span class="metric-value counter" data-val="100">0</span>
+                        </div>
+                        <div class="metric-bar-container">
+                            <div class="metric-bar bar-red" data-target="100"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analysis-scanner reveal">
+                    <button id="startScan" class="btn-scan">
+                        <span class="scan-icon">⚡</span> RUN FORENSIC SCAN
+                    </button>
+                    <div id="scanTerminal" class="analysis-terminal">
+                        <div class="terminal-line">> SYSTEM READY...</div>
+                    </div>
+                    <div class="scan-meta">
+                        <span id="scanStatus">SYSTEM STANDBY</span>
+                        <span class="scan-id">ID: LYRAA-143-X</span>
+                    </div>
+                </div>
+
+                <div class="analysis-footer reveal">
+                    <div class="analysis-notes">
+                        <h3>✦ Subject Final Assessment ✦</h3>
+                        <p>Clinical data confirms: Subject (Lyraa) is a Tier-1 threat to all existing romantic
+                            standards.
+                            Her presence causes immediate biological chaos, mischievous energy spikes, and a permanent
+                            displacement of the heart.
+                            Countermeasures: Resistance is futile. Recommendation: Immediate surrender to her hugs. ❤️
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Evidence Section -->
+        <section id="evidence">
+            <div class="evidence-section">
+                <div class="evidence-header reveal">
+                    <span class="section-label">§ Exhibit A Through Z</span>
+                    <h2 class="section-title">Reasons She Has <em class="highlight-red">No Defense</em></h2>
+                </div>
+                <div class="evidence-ticker">
+                    <div class="evidence-ticker-inner">
+                        <span>Her Laugh</span><span class="sep">✦</span>
+                        <span>The Way She Texts</span><span class="sep">✦</span>
+                        <span>Her Naughtiness</span><span class="sep">✦</span>
+                        <span>That Look She Gives</span><span class="sep">✦</span>
+                        <span>Her Voice</span><span class="sep">✦</span>
+                        <span>The Way She Smiles</span><span class="sep">✦</span>
+                        <span>Her Cute Anger</span><span class="sep">✦</span>
+                        <span>Being Irresistible</span><span class="sep">✦</span>
+                        <span>Her Laugh</span><span class="sep">✦</span>
+                        <span>The Way She Texts</span><span class="sep">✦</span>
+                        <span>Her Naughtiness</span><span class="sep">✦</span>
+                        <span>That Look She Gives</span><span class="sep">✦</span>
+                        <span>Her Voice</span><span class="sep">✦</span>
+                        <span>The Way She Smiles</span><span class="sep">✦</span>
+                        <span>Her Cute Anger</span><span class="sep">✦</span>
+                        <span>Being Irresistible</span><span class="sep">✦</span>
+                    </div>
+                </div>
+                <div class="reasons-grid">
+                    <div class="reason-card reveal">
+                        <div class="reason-num">01</div>
+                        <div class="reason-text">
+                            <h3>She Makes Everything Better</h3>
+                            <p>Bad day, good day, boring day — somehow just knowing she exists makes all of it better.
+                                That's illegal levels of power to have over one person.</p>
+                        </div>
+                    </div>
+                    <div class="reason-card reveal" style="transition-delay:.1s">
+                        <div class="reason-num">02</div>
+                        <div class="reason-text">
+                            <h3>She's Naughty in the Best Way</h3>
+                            <p>Cheeky, playful, a little bit trouble — she keeps things exciting and never lets life get
+                                boring. This is her greatest crime and greatest gift.</p>
+                        </div>
+                    </div>
+                    <div class="reason-card reveal" style="transition-delay:.15s">
+                        <div class="reason-num">03</div>
+                        <div class="reason-text">
+                            <h3>She Doesn't Know How Stunning She Is</h3>
+                            <p>Somehow the most dangerous part about her is that she has no idea how completely and
+                                totally breathtaking she is. It's unfair to everyone else.</p>
+                        </div>
+                    </div>
+                    <div class="reason-card reveal" style="transition-delay:.2s">
+                        <div class="reason-num">04</div>
+                        <div class="reason-text">
+                            <h3>Her Mind is as Beautiful as Her Face</h3>
+                            <p>Sharp, funny, surprising — conversations with her are like finding treasure. You never
+                                know what you'll discover but you know it'll be wonderful.</p>
+                        </div>
+                    </div>
+                    <div class="reason-card reveal" style="transition-delay:.25s">
+                        <div class="reason-num">05</div>
+                        <div class="reason-text">
+                            <h3>She's Perfectly, Imperfectly Her</h3>
+                            <p>Every little quirk, every habit, every weird little thing about her — all of it is
+                                exactly right. Not despite the imperfections but because of them.</p>
+                        </div>
+                    </div>
+                    <div class="reason-card reveal" style="transition-delay:.3s">
+                        <div class="reason-num">06</div>
+                        <div class="reason-text">
+                            <h3>She Is Simply Irreplaceable</h3>
+                            <p>There is no backup plan, no substitute, no version of any of this that doesn't have her
+                                in it. She is the only one who could ever be her, and that is everything.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="gallery-section">
+            <div class="gallery-inner">
+                <div class="gallery-header reveal">
+                    <span class="section-label">§ Visual Evidence</span>
+                    <h2 class="section-title">The <em class="highlight-red">Lyraa</em> Files</h2>
+                    <p class="gallery-subtitle">12 pieces of irrefutable evidence proving she is dangerously, criminally
+                        perfect. 💋
+                    </p>
+                </div>
+                <div class="gallery-grid">
+
+                    <!-- Photo 1 -->
+                    <div class="gallery-item reveal" data-index="01" data-type="Mysterious" data-emoji="🌊"
+                        data-msg="That mysterious vibe hits different. She doesn't even need to try — she's just effortlessly the most interesting person in any room. 💫"
+                        data-danger="Absolutely Lethal" data-weapon="Her Aura" data-love="9999/10">
+                        <img src="./lyraa photos/photo1.jpeg" alt="Lyraa Photo 1">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Mysterious</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 2 -->
+                    <div class="gallery-item reveal" data-index="02" data-type="Naughty" data-emoji="😈"
+                        data-msg="Upside down and still the most attractive person alive. How is this legal?? There should be a law. 🙃💋"
+                        data-danger="Criminal" data-weapon="Naughty Smile" data-love="∞/10">
+                        <img src="./lyraa photos/photo2.jpeg" alt="Lyraa Photo 2">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Naughty</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 3 -->
+                    <div class="gallery-item reveal" data-index="03" data-type="Cute" data-emoji="🥺"
+                        data-msg="Glasses, dark energy, and that look — she's literally art. I cannot function when she does this. My heart stopped. Send help. 🖤"
+                        data-danger="Heart-Stopping" data-weapon="Those Eyes" data-love="999/10">
+                        <img src="./lyraa photos/photo3.jpeg" alt="Lyraa Photo 3">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Cute</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 4 -->
+                    <div class="gallery-item reveal" data-index="04" data-type="Hot" data-emoji="🔥"
+                        data-msg="That hair. That face. That effortless beauty in the dark. She makes darkness look like the most beautiful place to be. 🌙💕"
+                        data-danger="Dangerously Hot" data-weapon="Her Beauty" data-love="9999/10">
+                        <img src="./lyraa photos/photo4.jpeg" alt="Lyraa Photo 4">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Hot</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 5 -->
+                    <div class="gallery-item reveal" data-index="05" data-type="Adorable" data-emoji="💋"
+                        data-msg="Duck lips and red lipstick in the dark — she's the definition of cute AND dangerous at the same time. I'm done for. 😵‍💫"
+                        data-danger="Maximum Cute" data-weapon="Duck Lips" data-love="8888/10">
+                        <img src="./lyraa photos/photo5.jpeg" alt="Lyraa Photo 5">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Adorable</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 6 -->
+                    <div class="gallery-item reveal" data-index="06" data-type="Gorgeous" data-emoji="🌸"
+                        data-msg="Pink dress, mirror selfie, perfection. She could walk into any room in this outfit and leave every single person speechless. Illegal levels of gorgeous. 🌸"
+                        data-danger="Catastrophic" data-weapon="That Dress" data-love="∞/10">
+                        <img src="./lyraa photos/photo6.jpg" alt="Lyraa Photo 6">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Gorgeous</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 7 -->
+                    <div class="gallery-item reveal" data-index="07" data-type="Sweet" data-emoji="🍬"
+                        data-msg="A smile that could melt the coldest heart. She's just too sweet for this world, and yet she's mine. Best feeling ever. 🥰"
+                        data-danger="Heart-Melting" data-weapon="Sweetness" data-love="777/10">
+                        <img src="./lyraa photos/photo7.jpg" alt="Lyraa Photo 7">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Sweet</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 8 -->
+                    <div class="gallery-item reveal" data-index="08" data-type="Breathtaking" data-emoji="✨"
+                        data-msg="Every time I look at her, I'm reminded of how lucky I am. She doesn't have to do anything — just existing is enough to make my day. ❤️"
+                        data-danger="Fatal Beauty" data-weapon="Presence" data-love="∞/10">
+                        <img src="./lyraa photos/photo8.jpg" alt="Lyraa Photo 8">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Breathtaking</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 9 -->
+                    <div class="gallery-item reveal" data-index="09" data-type="Soft" data-emoji="🤍"
+                        data-msg="Kirby shirt and the most soft, warm smile I've ever seen. She looks like a whole hug in human form. I want to keep her forever. 🥹"
+                        data-danger="Softly Lethal" data-weapon="That Smile" data-love="7777/10">
+                        <img src="./lyraa photos/photo9.jpeg" alt="Lyraa Photo 9">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Soft</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 10 -->
+                    <div class="gallery-item reveal" data-index="10" data-type="Boss" data-emoji="👑"
+                        data-msg="All black, confident, effortlessly powerful. She's the main character and everyone else is just background. That look owns the entire world. 🖤👑"
+                        data-danger="Universe-Breaking" data-weapon="Confidence" data-love="∞/10">
+                        <img src="./lyraa photos/photo10.jpeg" alt="Lyraa Photo 10">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Boss</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 11 -->
+                    <div class="gallery-item reveal" data-index="11" data-type="Candid" data-emoji="🖤"
+                        data-msg="A candid laugh is the rarest, most precious thing. When she laughs like this — completely unguarded — that's when the world stops. 🥰"
+                        data-danger="Impossibly Sweet" data-weapon="Her Laugh" data-love="6666/10">
+                        <img src="./lyraa photos/photo11.jpg" alt="Lyraa Photo 11">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Candid</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                    <!-- Photo 12 -->
+                    <div class="gallery-item reveal" data-index="12" data-type="Stunning" data-emoji="✨"
+                        data-msg="A close-up of the most beautiful face I've ever had the privilege of knowing. Those eyes. That face. Everything. She IS the filter. 💖"
+                        data-danger="Absolutely Fatal" data-weapon="Natural Beauty" data-love="∞/10">
+                        <img src="./lyraa photos/photo12.png" alt="Lyraa Photo 12">
+                        <div class="gallery-info">
+                            <span class="gallery-tag">Stunning</span>
+                            <span class="gallery-view">💌 View Evidence</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <!-- Gallery Modal -->
+        <div class="gallery-modal" id="galleryModal">
+            <div class="modal-close" id="modalClose">&times;</div>
+            <div class="modal-content">
+                <div class="modal-image-box">
+                    <img id="modalImg" src="" alt="Gallery Preview">
+                    <div class="modal-type-tag" id="modalTag">Cute</div>
+                    <div class="modal-emoji-badge" id="modalEmoji">💋</div>
+                    <div class="modal-index-badge" id="modalIndex">01</div>
+                </div>
+                <div class="modal-info">
+                    <div class="modal-header-row">
+                        <h3 class="modal-title">✦ Official Evidence ✦</h3>
+                        <div class="modal-hearts">❤️❤️❤️</div>
+                    </div>
+
+                    <div class="modal-stats">
+                        <div class="modal-stat-item">
+                            <span class="stat-key">🚨 Danger Level</span>
+                            <span class="stat-val highlight-red" id="modalDanger">Critical</span>
+                        </div>
+                        <div class="modal-stat-item">
+                            <span class="stat-key">⚔️ Weapon Used</span>
+                            <span class="stat-val highlight-gold" id="modalWeapon">Her Smile</span>
+                        </div>
+                        <div class="modal-stat-item">
+                            <span class="stat-key">💕 Love Rating</span>
+                            <span class="stat-val highlight-gold" id="modalLove">143/10</span>
+                        </div>
+                    </div>
+
+                    <div class="modal-divider"></div>
+
+                    <div class="modal-msg-box">
+                        <span class="modal-msg-label">💌 Yuki's Note</span>
+                        <p class="modal-msg" id="modalMsg">The message goes here.</p>
+                    </div>
+
+                    <div class="modal-divider"></div>
+
+                    <div class="modal-footer">
+                        <div class="modal-footer-left">
+                            <span class="modal-footer-badge">🧑‍⚖️ Judge: Yuki</span>
+                        </div>
+                        <div class="modal-footer-right">
+                            <span class="modal-verdict-stamp">GUILTY ❤️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section id="mood" class="mood-section">
+            <div class="mood-inner">
+                <div class="mood-header reveal">
+                    <span class="section-label">§ Classified Evidence</span>
+                    <h2 class="section-title">The <em class="highlight-red">Lyraa</em> Effect</h2>
+                    <p class="mood-subtitle">What she does to an otherwise functional human being</p>
+                </div>
+                <div class="mood-bento">
+                    <div class="mood-card mood-card-big reveal">
+                        <span class="mood-tag">Primary Effect</span>
+                        <span class="mood-emoji">🫀</span>
+                        <div class="mood-card-title">Complete Loss of Heart</div>
+                        <p class="mood-card-text">She walked in. Heart walked out. It followed her home. She kept it.
+                            This is the full and complete medical record of what happened to him when he met Lyraa. No
+                            recovery expected or desired.</p>
+                    </div>
+                    <div class="mood-card reveal" style="transition-delay:.1s">
+                        <span class="mood-tag">Side Effect 1</span>
+                        <span class="mood-emoji">😵‍💫</span>
+                        <div class="mood-card-title">Permanent Dizziness</div>
+                        <p class="mood-card-text">Caused by being too close to someone this wonderful.</p>
+                    </div>
+                    <div class="mood-card reveal" style="transition-delay:.15s">
+                        <span class="mood-tag">Side Effect 2</span>
+                        <span class="mood-emoji">🌹</span>
+                        <div class="mood-card-title">Uncontrollable Romance</div>
+                        <p class="mood-card-text">Making websites, writing letters, declaring love publicly.</p>
+                    </div>
+                    <div class="mood-card reveal" style="transition-delay:.2s">
+                        <span class="mood-tag">Side Effect 3</span>
+                        <span class="mood-emoji">😈</span>
+                        <div class="mood-card-title">Matching Naughtiness</div>
+                        <p class="mood-card-text">Her chaotic energy is deeply contagious. No cure sought.</p>
+                    </div>
+                    <div class="mood-card reveal" style="transition-delay:.25s">
+                        <span class="mood-tag">Status Report</span>
+                        <span class="mood-emoji">🥵</span>
+                        <div class="mood-card-title">Permanently Claimed</div>
+                        <p class="mood-card-text">He is completely, wholly, and naughtily hers. Evidence: This entire
+                            dossier exists for her pleasure.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="timeline-section" id="timeline">
+            <div class="timeline-inner">
+                <div class="timeline-header reveal">
+                    <span class="section-label">§ The Official Record</span>
+                    <h2 class="section-title">Timeline of <em class="highlight-red">Crimes</em></h2>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <span class="timeline-date">The Beginning</span>
+                        <div class="timeline-event">First Contact — Heart Status: Normal</div>
+                        <p class="timeline-detail">Before her, life was ordinary. Heart was functioning normally. No
+                            crimes had been committed. The calm before the storm. The before-Lyraa era.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <span class="timeline-date">The Incident</span>
+                        <div class="timeline-event">She Smiled — Heart Status: Compromised</div>
+                        <p class="timeline-detail">She smiled. That was it. That was the whole crime. One smile, and
+                            suddenly everything was different. A perfectly normal heart was never the same again.
+                            Witnesses (none needed) confirm: irreversible.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <span class="timeline-date">The Escalation</span>
+                        <div class="timeline-event">She Being Her — Heart Status: Missing, Presumed Hers</div>
+                        <p class="timeline-detail">She continued to exist — naughtily, beautifully, perfectly — and that
+                            was enough to constitute a full felony. Heart has been officially reported missing. Last
+                            seen following her around everywhere.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <span class="timeline-date">The Verdict</span>
+                        <div class="timeline-event">Total Surrender — Heart Status: Hers Forever</div>
+                        <p class="timeline-detail">After exhaustive investigation, the court has ruled: resistance is
+                            futile and also undesirable. She gets the heart. She gets everything. The defendant raises
+                            no objections. The defendant is happy about this.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot timeline-dot-gold"></div>
+                        <span class="timeline-date">Right Now</span>
+                        <div class="timeline-event">This Website — Heart Status: Completely Gone, Totally Hers</div>
+                        <p class="timeline-detail">He made her a whole entire website about how naughty and wonderful
+                            she is. If this doesn't prove the case beyond all doubt, nothing will. She is loved. Deeply.
+                            Naughtily. Completely.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Verdict Section -->
+        <section id="verdict" class="verdict-section">
+            <div class="verdict-glow"></div>
+            <div class="verdict-particles" id="verdictParticles"></div>
+            <span class="section-label">§ Final Ruling</span>
+            <h2 class="verdict-title reveal">
+                The Court<br>
+                <em>Rules...</em>
+            </h2>
+            <p class="verdict-ruling reveal" style="transition-delay:.15s">
+                After careful review of all evidence, crimes, side effects, and general magnificence —
+                this court finds the accused <strong class="highlight-gold">GUILTY</strong> of being
+                the most wonderful, naughty, irresistible, breathtaking human being in existence.
+            </p>
+            <div class="verdict-seal reveal" style="transition-delay:.3s">
+                <div class="verdict-seal-main">GUILTY<br>❤️<br>Forever</div>
+                <div class="verdict-seal-sub">Sealed with love</div>
+                <div class="seal-shine"></div>
+            </div>
+            <p class="verdict-message reveal" style="transition-delay:.4s">
+                "Sentenced to being loved outrageously, naughtily, and without a single breath of parole.<br>She is
+                mine, and I am her prisoner of love."
+            </p>
+            <div class="reveal" style="transition-delay:.5s">
+                <a href="#letter" class="btn-primary">
+                    <span>Read Her Sentence</span>
+                    <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- Love Letter Section -->
+        <section id="letter" class="letter-section">
+            <div class="letter-inner">
+                <div class="letter-header reveal">
+                    <span class="section-label">§ Personal Correspondence</span>
+                    <h2 class="section-title">A Letter to <em class="highlight-red">Lyraa</em></h2>
+                </div>
+                <div class="letter-paper reveal" style="transition-delay:.2s">
+                    <div class="letter-date">Written with love • For your eyes only</div>
+                    <div class="letter-greeting">My dearest, naughtiest Lyraa,</div>
+                    <div class="letter-body">
+                        <p>I don't know what kind of <strong>dangerous, naughty spell</strong> you cast on me, Lyraa.
+                            One second I was a normal human, and the next, you were biting into my heart like it was
+                            your favorite snack. Now I'm just a hopeless, obsessed mess — and honestly? I've never been
+                            happier to be someone's favorite problem.
+                        </p>
+                        <p>You're naughty in all the ways that should be totally illegal. That little smirk you do when
+                            you know you're teasing me, the way you use your 'cute card' to get away with absolute
+                            murder, and those eyes that look at me like you're planning my downfall — it's
+                            <strong>criminally addictive, princess</strong>. You're a high-level distraction I never
+                            want to
+                            escape from.
+                        </p>
+                        <p>I made this site because one text or one kiss isn't enough to contain how much I crave you.
+                            You're the girl who turned my world upside down and then laughed while doing it. You're the
+                            main event, the plot twist, and the most beautiful habit I've ever had. My heart doesn't
+                            even belong to me anymore; it's just your favorite toy now.</p>
+                        <p>You're a brat, a heartbeat-thief, and a total troublemaker. But you're <strong>my</strong>
+                            troublemaker. The only one I want to argue with, the only one I want to spoil, and the only
+                            one I want to hold until the sun comes up. Every 'crime' you've committed against my focus?
+                            I'm granting you full immunity, as long as you stay right where you belong — in my arms.</p>
+                        <p>So here is your life sentence, my beautiful Lyraa: <strong>Total, unconditional surrender to
+                                my love.</strong> You're going to be kissed until you can't think straight, hugged until
+                            you feel my heartbeat through your skin, and loved with a naughty intensity that only you
+                            deserve. No bail. No escape. I'm keeping you forever.</p>
+
+                    </div>
+                    <div class="letter-signature">
+                        <div class="letter-sign-text">Yours, Always, Yuki 🖤</div>
+                        <div class="letter-sign-sub">— Your most willing captive</div>
+                    </div>
+
+                    <div class="letter-ps">
+                        <div class="ps-box">
+                            <span class="ps-label">P.S.</span> Stop wearing my hoodies. You look way too good in them
+                            and it's making it impossible for me to ever let you leave the house. 💋🔥
+                            <div class="ps-tape"></div>
+                        </div>
+                    </div>
+                    <div class="letter-wax-seal">
+                        <span>💋</span>
+                        <div class="seal-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="hearts-footer">
+            <span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span><span>❤️</span>
+        </div>
+        <div class="footer-logo"><span>L</span>yraa</div>
+        <div class="footer-tagline">"Wanted. Captured. Loved beyond all measure."</div>
+
+        <div class="footer-divider-premium"></div>
+
+        <div class="footer-credits-new">
+            <p class="credits-line">MADE WITH LOVE BY <span class="highlight-gold">YUKI</span> — FOR THE NAUGHTIEST
+                LYRAA ALIVE</p>
+            <p class="credits-line">⚡ YUKI ❤️ LYRAA — FOREVER & ALWAYS ⚡</p>
+            <p class="credits-line">ALL CRIMES LISTED ARE REAL. ALL LOVE IS EVEN REALER.</p>
+            <p class="credits-line credits-copyright">© THE DEPARTMENT OF HOPELESS ROMANTICS — EST. THE DAY SHE SMILED
+                AT YUKI</p>
+        </div>
+
+        <div class="footer-back-top" id="backToTop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 15l-6-6-6 6" />
+            </svg>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>
